@@ -23,22 +23,22 @@ services:
     volumes:
       - .:/app # ソースコードをPHPにもマウント（Nginxと共有）
 
-  # データベースコンテナ（PostgreSQL）
+  # データベースコンテナ（MySQL）
   db:
     build:
-      context: ./docker/postgres # postgres用のDockerfileがあるディレクトリ
+      context: ./docker/mysql # mysql用のDockerfileがあるディレクトリ
       dockerfile: Dockerfile # 使用するDockerfile名
       args:
-        POSTGRES_DB: ${DB_DATABASE} # 初期作成されるDB名
-        POSTGRES_USER: ${DB_USERNAME} # DBユーザー名
-        POSTGRES_PASSWORD: ${DB_PASSWORD} # DBユーザーパスワード
-    container_name: postgres # コンテナ名を「postgres」に設定
+        MYSQL_DATABASE: ${DB_DATABASE} # 初期作成されるDB名
+        MYSQL_USER: ${DB_USERNAME} # DBユーザー名
+        MYSQL_PASSWORD: ${DB_PASSWORD} # DBユーザーパスワード
+    container_name: mysql # コンテナ名を「mysql」に設定
     restart: always # コンテナが落ちたときに自動再起動
     ports:
-      - 5432:5432 # ホストの5432ポートをDBの5432ポートにマッピング
+      - 3306:3306 # ホストの3306ポートをDBの3306ポートにマッピング
     volumes:
-      - db-data:/var/lib/postgresql/data # 永続化用ボリュームをマウント（データ保持）
+      - db-data:/var/lib/mysql # 永続化用ボリュームをマウント（データ保持）
 
-# ボリューム定義（PostgreSQLのデータ永続化用）
+# ボリューム定義（MySQLのデータ永続化用）
 volumes:
   db-data:

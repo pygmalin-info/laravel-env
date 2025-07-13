@@ -2,7 +2,7 @@
 FROM composer as composer
 
 # PHPのベースイメージ（FPMでNginxと連携）
-FROM php:8.3-fpm
+FROM php:8.3-fpm-bookworm
 
 # Composer をインストール
 COPY --from=composer /usr/bin/composer /usr/bin/composer
@@ -11,13 +11,10 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     unzip \
-    libpq-dev \
+    default-mysql-client \
+    default-libmysqlclient-dev \
+    && docker-php-ext-install pdo_mysql mysqli \
     && rm -rf /var/lib/apt/lists/*
-
-# PHP拡張をインストール
-RUN docker-php-ext-install \
-    pgsql \
-    pdo_pgsql
 
 RUN useradd -ms /bin/bash phper
 
