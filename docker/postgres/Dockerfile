@@ -1,4 +1,4 @@
-FROM postgres
+FROM postgres:bookworm
 
 # タイムゾーンの設定
 ENV TZ=Asia/Tokyo

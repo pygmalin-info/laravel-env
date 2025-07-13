@@ -2,7 +2,7 @@
 FROM composer as composer
 
 # PHPのベースイメージ（FPMでNginxと連携）
-FROM php:8.3-fpm
+FROM php:8.3-fpm-bookworm
 
 # Composer をインストール
 COPY --from=composer /usr/bin/composer /usr/bin/composer
